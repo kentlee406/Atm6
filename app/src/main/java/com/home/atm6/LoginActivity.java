@@ -1,5 +1,6 @@
 package com.home.atm6;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText edPasswd;
 
 
+    @SuppressLint("ApplySharedPref")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +36,8 @@ public class LoginActivity extends AppCompatActivity {
 
         edUserid = (EditText) findViewById(R.id.userid);
         edPasswd= (EditText)findViewById(R.id.passwd);
+        String userid=getSharedPreferences("atm",MODE_PRIVATE).getString("USERID", "");
+        edUserid.setText(userid);
     }
 
     public void login(View view) {
@@ -42,11 +46,16 @@ public class LoginActivity extends AppCompatActivity {
         try{
             FirebaseDatabase.getInstance().getReference("users").child(userid).child("password")
                     .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @SuppressLint("ApplySharedPref")
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             String pw;
                             pw = Objects.requireNonNull(Objects.requireNonNull(snapshot).getValue()).toString();
                             if(pw.equals(passwd)){
+                                getSharedPreferences("atm",MODE_PRIVATE)
+                                        .edit()
+                                        .putString("USERID",userid)
+                                        .commit();
                                 setResult(RESULT_OK);
                                 finish();
                             }else{

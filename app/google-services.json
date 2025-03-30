@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "432894257233",
+    "firebase_url": "https://atm6-c663d-default-rtdb.firebaseio.com",
+    "project_id": "atm6-c663d",
+    "storage_bucket": "atm6-c663d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:432894257233:android:1756ae319891c308467070",
+        "android_client_info": {
+          "package_name": "com.home.atm6"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6kSiXp-scvVdhFLbFiP7LX-oiu80tVSA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
