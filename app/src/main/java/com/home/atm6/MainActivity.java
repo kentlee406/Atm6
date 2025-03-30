@@ -1,10 +1,12 @@
 package com.home.atm6;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
@@ -20,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
+    private static final int REQUEST_LOGIN = 100;
     boolean logon=false;
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
@@ -30,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(!logon){
             Intent intent=new Intent(this, LoginActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, REQUEST_LOGIN);
         }
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -50,6 +53,17 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    // Ctrl+O
+    @SuppressLint("MissingSuperCall")
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == REQUEST_LOGIN){
+            if (resultCode != RESULT_OK){
+                finish();
+            }
+        }
     }
 
     @Override

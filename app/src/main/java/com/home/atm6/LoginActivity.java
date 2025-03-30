@@ -29,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
         String userid=edUserid.getText().toString();
         String passwd=edPasswd.getText().toString();
         if((userid.equals("kent"))&&(passwd.equals("1234"))){
+            setResult(RESULT_OK);
             finish();
         }
     }
