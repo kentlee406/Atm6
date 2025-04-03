@@ -15,6 +15,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.home.atm6.databinding.ActivityMainBinding;
 
@@ -26,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
     boolean logon=false;
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
-
+    private RecyclerView recyclerView;
+    String[] functions=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +56,12 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        recyclerView = findViewById(R.id.recycler);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        FunctionAdapter adapter=new FunctionAdapter(this);
+        recyclerView.setAdapter(adapter);
     }
 
     // Ctrl+O
