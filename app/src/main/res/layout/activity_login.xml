@@ -94,4 +94,15 @@
         android:onClick="quit"
         app:layout_constraintStart_toEndOf="@+id/button"
         app:layout_constraintTop_toBottomOf="@+id/passwd" />
+
+    <CheckBox
+        android:id="@+id/cb_rem_userid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="45dp"
+        android:text="記住帳號"
+        android:textSize="20dp"
+        app:layout_constraintStart_toEndOf="@+id/userid"
+        app:layout_constraintTop_toTopOf="@+id/guideline4" />
 </androidx.constraintlayout.widget.ConstraintLayout>
