@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.FirebaseDatabase;
 import com.home.atm6.databinding.ActivityContactBinding;
 import com.home.atm6.databinding.ActivityMainBinding;
 
@@ -35,6 +36,7 @@ import java.util.List;
 public class ContactActivity extends AppCompatActivity {
 
     private static final int REQUEST_CONTACT = 80;
+    private List<Contact> contacts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +62,7 @@ public class ContactActivity extends AppCompatActivity {
         try (
             Cursor cursor = getContentResolver ( ).query (ContactsContract.Contacts.CONTENT_URI, null, null,
                     null, null)) {
-            List<Contact> contacts=new ArrayList<> ();
+            contacts = new ArrayList<> ();
 
             while (true){
                 assert cursor != null;
@@ -104,7 +106,15 @@ public class ContactActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId()==R.id.action_upload){
             // upload to Firebase
-            Log.i("ContactActivity", "upload to firebase");
+            String userid=getSharedPreferences ("atm",MODE_PRIVATE)
+                    .getString("USERID", null);
+            if(userid!=null){
+                FirebaseDatabase.getInstance ( ).getReference ("users")
+                        .child(userid)
+                        .child("contacts")
+                        .setValue(contacts);
+            }
+
         }
         return super.onOptionsItemSelected (item);
     }
