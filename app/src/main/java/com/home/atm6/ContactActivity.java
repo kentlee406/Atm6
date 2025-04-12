@@ -6,6 +6,9 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -18,8 +21,13 @@ import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.snackbar.Snackbar;
+import com.home.atm6.databinding.ActivityContactBinding;
+import com.home.atm6.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,13 +39,14 @@ public class ContactActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate (savedInstanceState);
-        EdgeToEdge.enable (this);
         setContentView (R.layout.activity_contact);
-        ViewCompat.setOnApplyWindowInsetsListener (findViewById (R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets (WindowInsetsCompat.Type.systemBars ( ));
-            v.setPadding (systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+
+        com.home.atm6.databinding.ActivityContactBinding binding = ActivityContactBinding.inflate (getLayoutInflater ( ));
+        setContentView(binding.getRoot());
+
+        setSupportActionBar(binding.toolbar);
+
+
         int permission = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS);
         if(permission== PackageManager.PERMISSION_GRANTED){
             readContact();
@@ -82,6 +91,24 @@ public class ContactActivity extends AppCompatActivity {
             }
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_contact, menu);
+        Log.i("ContactActivity", "onCreateOptionsMenu");
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId()==R.id.action_upload){
+            // upload to Firebase
+            Log.i("ContactActivity", "upload to firebase");
+        }
+        return super.onOptionsItemSelected (item);
+    }
+
     public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactHolder> { // Alt+Enter to implementation
         List<Contact> contacts;
         public ContactAdapter(List<Contact> contacts){
