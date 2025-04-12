@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
 
         int permission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA);
         if (permission== PackageManager.PERMISSION_GRANTED){
-            takePhoto();  // Ctrl+Alt+M  // 新增拍照功能
+//            takePhoto();  // Ctrl+Alt+M  // 新增拍照功能
         }else{
             ActivityCompat.requestPermissions (this, new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_CAMERA);
         }
