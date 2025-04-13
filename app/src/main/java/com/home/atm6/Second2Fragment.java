@@ -9,11 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.home.atm6.databinding.FragmentSecondBinding;
+import com.home.atm6.databinding.FragmentSecond2Binding;
 
-public class SecondFragment extends Fragment {
+public class Second2Fragment extends Fragment {
 
-    private FragmentSecondBinding binding;
+    private FragmentSecond2Binding binding;
 
     @Override
     public View onCreateView(
@@ -21,23 +21,23 @@ public class SecondFragment extends Fragment {
             Bundle savedInstanceState
     ) {
 
-        binding = FragmentSecondBinding.inflate(inflater, container, false);
-        return binding.getRoot();
+        binding = FragmentSecond2Binding.inflate (inflater, container, false);
+        return binding.getRoot ( );
 
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        super.onViewCreated (view, savedInstanceState);
 
-//        binding.buttonSecond.setOnClickListener(v ->
-//                NavHostFragment.findNavController(SecondFragment.this)
-//                        .navigate(R.id.action_SecondFragment_to_FirstFragment)
+//        binding.buttonSecond.setOnClickListener (v ->
+//                NavHostFragment.findNavController (Second2Fragment.this)
+//                        .navigate (R.id.action_Second2Fragment_to_First2Fragment)
 //        );
     }
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
+        super.onDestroyView ( );
         binding = null;
     }
 
