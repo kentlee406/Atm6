@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         findViews ( );
-        new TestTask ().execute ("https://www.google.com.tw/?hl=zh_TW");
+//        new TestTask ().execute ("https://www.google.com.tw/?hl=zh_TW");
     }
 
 
