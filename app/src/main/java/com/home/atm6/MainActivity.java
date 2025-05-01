@@ -1,9 +1,7 @@
 package com.home.atm6;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -12,12 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -63,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
         setupFunctions();
 
-        RecyclerView recyclerView = findViewById (R.id.recycler);
+        RecyclerView recyclerView = findViewById (R.id.recycleView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 //        FunctionAdapter adapter=new FunctionAdapter(this);

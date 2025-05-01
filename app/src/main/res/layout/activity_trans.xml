@@ -8,6 +8,7 @@
     tools:context=".TransActivity">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycleView"
         android:layout_width="409dp"
         android:layout_height="729dp"
         android:layout_marginStart="8dp"

@@ -31,7 +31,7 @@ import java.util.ArrayList;
 public class TransActivity extends AppCompatActivity {
     public static final String TAG=TransActivity.class.getSimpleName ();
     private static ArrayList<Transaction> transactions;
-    public static RecyclerView recycler;
+    public static RecyclerView recyclerView;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -45,13 +45,12 @@ public class TransActivity extends AppCompatActivity {
             return insets;
         });
 
-        // The program start from this:
-        recycler = findViewById (R.id.recycler);
-        recycler.setHasFixedSize (true);
-        recycler.setLayoutManager (new LinearLayoutManager (this));
 
+        // The program start from this:
         new TransTask ().execute ("https://atm201605.appspot.com/h");
-        // 2025.04.27 Added
+        recyclerView = findViewById (R.id.recycleView);
+        recyclerView.setHasFixedSize (true);
+        recyclerView.setLayoutManager (new LinearLayoutManager (this));
 
         /* 2025.04.27 在留言區發問的問題--使用okhttpclient套件印不出JSON格式
         OkHttpClient client=new OkHttpClient (  );
@@ -73,7 +72,7 @@ public class TransActivity extends AppCompatActivity {
     public class TransTask extends AsyncTask<String, Void, String>{
 
         @Override
-        protected String doInBackground(String... strings) {
+        public String doInBackground(String... strings) {
             StringBuilder sb;
             try {
                 URL url=new URL ("https://atm201605.appspot.com/h");
@@ -92,7 +91,7 @@ public class TransActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        public void onPostExecute(String s) {
             super.onPostExecute (s);
             Log.d (TAG, "onPostExecute: "+s);
             runOnUiThread (new Runnable ( ) {
@@ -100,11 +99,10 @@ public class TransActivity extends AppCompatActivity {
                 public void run() {
 
                     parseJSON(s);
-
+                    TransAdapter adapter=new TransAdapter ();  // 2025.05.01 Kent Updated
+                    recyclerView.setAdapter (adapter);   // 2025.05.01 Kent Updated
                 }
             });
-
-
 
         }
 
@@ -149,11 +147,11 @@ public class TransActivity extends AppCompatActivity {
             public void bindTo(Transaction tran) {
                 dateText.setText(tran.getDate ());
                 amountText.setText(String.valueOf(tran.getAmount ()));
-                typeText.setText(tran.getType());
+                typeText.setText(String.valueOf(tran.getType()));  // 2025.05.01 Kent Updated
             }
         }
     }
-    public static void parseJSON(String json) {
+    public void parseJSON(String json) {
         transactions = new ArrayList<> (  );
 
         try {
@@ -164,11 +162,12 @@ public class TransActivity extends AppCompatActivity {
                 JSONObject object=array.getJSONObject (i);
                 transactions.add(new Transaction ( object ));
             }
+            TransAdapter adapter=new TransAdapter ();  // 2025.05.01 Kent Updated
+            recyclerView.setAdapter (adapter);   // 2025.05.01 Kent Updated
         } catch (JSONException e) {
             throw new RuntimeException (e);
         }
-        Transaction adapter=new Transaction (  );
-        recycler.setAdapter (adapter);
+
 
     }
 

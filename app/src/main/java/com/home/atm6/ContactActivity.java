@@ -13,22 +13,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.FirebaseDatabase;
 import com.home.atm6.databinding.ActivityContactBinding;
-import com.home.atm6.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +79,7 @@ public class ContactActivity extends AppCompatActivity {
                     contacts.add(contact);
                 }
                 ContactAdapter adapter=new ContactAdapter(contacts);
-                RecyclerView recyclerView=findViewById (R.id.recycler);
+                RecyclerView recyclerView=findViewById (R.id.recycleView);
                 recyclerView.setHasFixedSize (true);
                 recyclerView.setLayoutManager (new LinearLayoutManager (this));
                 recyclerView.setAdapter(adapter);
