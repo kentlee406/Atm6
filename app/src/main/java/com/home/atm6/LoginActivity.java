@@ -1,9 +1,14 @@
 package com.home.atm6;
 
+import static com.home.atm6.TransActivity.TAG;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -38,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText edUserid;
     private EditText edPasswd;
     private CheckBox cb_rem_userid;
+    private Intent hs;
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -55,18 +61,44 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        findViews ( );
 
         FragmentManager manager=getSupportFragmentManager ();
         FragmentTransaction fragmentTransaction = manager.beginTransaction ();
         fragmentTransaction.add(R.id.container_news, NewsFragment.getInstance ());
         fragmentTransaction.commit();
 //        camera ( );
+        hs = new Intent ( this, HelloService.class );
+        hs.putExtra ("NAME","T1");
+        startService (hs);
+        hs.putExtra ("NAME","TL2");
+        startService (hs);
+        hs.putExtra ("NAME","T3");
+        startService (hs);
 
 
-        findViews ( );
 //        new TestTask ().execute ("https://www.google.com.tw/?hl=zh_TW");
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart ( );
+        IntentFilter filter=new IntentFilter ( HelloService.Action_HELLO_DONE );
+        registerReceiver (receiver, filter);
+    }
+
+    BroadcastReceiver receiver=new BroadcastReceiver ( ) {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d (TAG, "onReceive: "+intent.getAction ());
+        }
+    };
+    @Override
+    protected void onStop() {
+        super.onStop ( );
+        stopService (hs);
+        unregisterReceiver (receiver);
+    }
 
     @SuppressLint("StaticFieldLeak")
     public class TestTask extends AsyncTask<String, Void, Integer> {  // Input, during the work, Output
