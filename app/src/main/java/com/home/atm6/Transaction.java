@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Transaction extends RecyclerView.Adapter {
+public class Transaction {
     String account;
     String date;
     int amount;
@@ -18,28 +18,13 @@ public class Transaction extends RecyclerView.Adapter {
 
     }
 
-    @NonNull
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
-    }
-
-    @Override
-    public int getItemCount() {
-        return 0;
-    }
-
     public Transaction(JSONObject object) {
         try {
-            String account=object.getString ("account");
-            String date=object.getString ("date");
-            int amount=object.getInt ("amount");
-            int type=object.getInt ("type");
+            // 2025.05.03 Kent 這裡不要加上String或int
+            account=object.getString ("account");
+            date=object.getString ("date");
+            amount=object.getInt ("amount");
+            type=object.getInt ("type");
         } catch (JSONException e) {
             throw new RuntimeException (e);
         }

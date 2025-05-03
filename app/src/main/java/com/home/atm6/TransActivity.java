@@ -48,9 +48,7 @@ public class TransActivity extends AppCompatActivity {
 
         // The program start from this:
         new TransTask ().execute ("https://atm201605.appspot.com/h");
-        recyclerView = findViewById (R.id.recycleView);
-        recyclerView.setHasFixedSize (true);
-        recyclerView.setLayoutManager (new LinearLayoutManager (this));
+
 
         /* 2025.04.27 在留言區發問的問題--使用okhttpclient套件印不出JSON格式
         OkHttpClient client=new OkHttpClient (  );
@@ -75,7 +73,7 @@ public class TransActivity extends AppCompatActivity {
         public String doInBackground(String... strings) {
             StringBuilder sb;
             try {
-                URL url=new URL ("https://atm201605.appspot.com/h");
+                URL url=new URL (strings[0]);
                 InputStream is=url.openStream ();
                 BufferedReader in=new BufferedReader (new InputStreamReader (is));
                 sb=new StringBuilder (  );
@@ -99,6 +97,9 @@ public class TransActivity extends AppCompatActivity {
                 public void run() {
 
                     parseJSON(s);
+                    recyclerView = findViewById (R.id.recycleView);
+                    recyclerView.setHasFixedSize (true);
+                    recyclerView.setLayoutManager (new LinearLayoutManager (TransActivity.this));
                     TransAdapter adapter=new TransAdapter ();  // 2025.05.01 Kent Updated
                     recyclerView.setAdapter (adapter);   // 2025.05.01 Kent Updated
                 }
@@ -145,7 +146,7 @@ public class TransActivity extends AppCompatActivity {
             }
 
             public void bindTo(Transaction tran) {
-                dateText.setText(tran.getDate ());
+                dateText.setText(tran.getDate());
                 amountText.setText(String.valueOf(tran.getAmount ()));
                 typeText.setText(String.valueOf(tran.getType()));  // 2025.05.01 Kent Updated
             }
@@ -162,8 +163,6 @@ public class TransActivity extends AppCompatActivity {
                 JSONObject object=array.getJSONObject (i);
                 transactions.add(new Transaction ( object ));
             }
-            TransAdapter adapter=new TransAdapter ();  // 2025.05.01 Kent Updated
-            recyclerView.setAdapter (adapter);   // 2025.05.01 Kent Updated
         } catch (JSONException e) {
             throw new RuntimeException (e);
         }
